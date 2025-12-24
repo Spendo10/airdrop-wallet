@@ -1,15 +1,16 @@
 {
   "name": "airdrop-wallet",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Airdrop Wallet Connect with Telegram Bot and MongoDB",
+  "main": "server/index.js",
   "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js"
+  },
+  "keywords": ["wallet", "airdrop", "telegram", "web3"],
+  "author": "Your Name",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",

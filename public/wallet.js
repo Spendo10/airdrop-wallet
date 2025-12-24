@@ -1,60 +1,38 @@
-// public/wallet.js
-const connectBtn = document.getElementById("connectBtn");
-const statusText = document.getElementById("status");
+const connectBtn = document.getElementById('connectBtn');
+const statusText = document.getElementById('status');
 
-// Function to connect wallet (MetaMask or WalletConnect)
 async function connectWallet() {
-  if (window.ethereum) {
-    // MetaMask detected
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      const address = accounts[0];
-      statusText.textContent = `🟢 Connected: ${address}`;
+  if (!window.Web3Modal) {
+    statusText.textContent = '❌ vendor.js not loaded';
+    return;
+  }
 
-      // Send wallet address to backend
-      const res = await fetch("/api/wallet-connect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ address })
-      });
-      const data = await res.json();
+  try {
+    const providerOptions = {}; // WalletConnect or other options can go here
+    const web3Modal = new window.Web3Modal.default({ cacheProvider: false, providerOptions });
+    const provider = await web3Modal.connect();
+    const web3 = new Web3(provider);
 
-      if (data.success) statusText.textContent = `✅ Wallet connected!`;
-      else statusText.textContent = `⚠️ Error: ${data.error || "Unknown"}`;
+    const accounts = await web3.eth.getAccounts();
+    const address = accounts[0];
+    statusText.textContent = `🟢 Connected: ${address}`;
 
-    } catch (err) {
-      statusText.textContent = `❌ MetaMask connection failed: ${err.message}`;
+    const response = await fetch('/api/wallet-connect', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ address })
+    });
+
+    const result = await response.json();
+    if (result.success) {
+      statusText.textContent = `✅ Wallet connected and recorded: ${address}`;
+    } else {
+      statusText.textContent = `⚠️ Error: ${result.error || 'Unknown error'}`;
     }
-  } else if (window.WalletConnectProvider) {
-    // WalletConnect fallback
-    try {
-      const provider = new WalletConnectProvider.default({
-        infuraId: "YOUR_INFURA_ID" // Optional, only for Ethereum mainnet
-      });
-      await provider.enable();
-      const web3 = new Web3(provider);
-      const accounts = await web3.eth.getAccounts();
-      const address = accounts[0];
-      statusText.textContent = `🟢 Connected: ${address}`;
-
-      // Send to backend
-      const res = await fetch("/api/wallet-connect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ address })
-      });
-      const data = await res.json();
-
-      if (data.success) statusText.textContent = `✅ Wallet connected!`;
-      else statusText.textContent = `⚠️ Error: ${data.error || "Unknown"}`;
-
-    } catch (err) {
-      statusText.textContent = `❌ WalletConnect failed: ${err.message}`;
-    }
-  } else {
-    statusText.textContent = "❌ No Web3 wallet detected! Install MetaMask or WalletConnect.";
+  } catch (err) {
+    console.error(err);
+    statusText.textContent = `❌ Connection failed: ${err.message || err}`;
   }
 }
 
-// Attach to button
-connectBtn.addEventListener("click", connectWallet);
+connectBtn.addEventListener('click', connectWallet);
