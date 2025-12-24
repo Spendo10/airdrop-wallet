@@ -4,92 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Airdrop Wallet Connect 🎄</title>
-  
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  
-  <!-- Christmas Style -->
   <style>
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(to bottom right, #ff4d4d, #33cc33);
       color: #fff;
-      margin: 0;
-      padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      margin: 0;
       text-align: center;
     }
-
     .container {
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       padding: 40px 20px;
       border-radius: 20px;
       box-shadow: 0 0 20px #fff;
       max-width: 400px;
       width: 100%;
     }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 20px;
-      color: #fff700;
-    }
-
-    #status {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-
+    h1 { color: #fff700; margin-bottom: 20px; }
+    #status { margin-top: 15px; font-weight: bold; }
     button {
       background-color: #ffcc00;
       border: none;
       padding: 12px 20px;
-      font-size: 1rem;
       font-weight: bold;
       color: #000;
       border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
       margin-top: 10px;
+      transition: all 0.3s ease;
     }
-
-    button:hover {
-      background-color: #fff700;
-      transform: scale(1.05);
-    }
-
-    .fa-wallet {
-      margin-right: 8px;
-    }
-
-    .wallet-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 20px;
-    }
+    button:hover { background-color: #fff700; transform: scale(1.05); }
+    .fa-wallet { margin-right: 8px; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🎄 Airdrop Wallet Connect 🎄</h1>
-
-    <div class="wallet-buttons">
-      <button id="metaMaskBtn"><i class="fa-solid fa-wallet"></i>Connect MetaMask</button>
-      <button id="walletConnectBtn"><i class="fa-solid fa-wallet"></i>Connect WalletConnect</button>
-    </div>
-
+    <button id="connectBtn"><i class="fa-solid fa-wallet"></i>Connect Wallet</button>
     <div id="status">💡 Not connected</div>
   </div>
 
-  <!-- Vendor JS (Web3 + WalletConnect) -->
+  <!-- Web3.js for wallets -->
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.12.0/dist/web3.min.js"></script>
+  <script src="https://unpkg.com/@walletconnect/web3-provider@1.7.8/dist/umd/index.min.js"></script>
+
+  <!-- YOUR vendor.js -->
   <script src="vendor.js"></script>
-  <!-- Custom Wallet JS -->
-  <script src="wallet.js"></script>
 </body>
 </html>
